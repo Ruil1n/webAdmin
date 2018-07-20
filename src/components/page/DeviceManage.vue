@@ -1,15 +1,14 @@
 <template>
     <div class="table">
+
+        <!-- TODO:需要修改 -->
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 表格</el-breadcrumb-item>
                 <el-breadcrumb-item>基础表格</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-
-
-
-
+    
         <div class="handle-box">
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_cate" placeholder="筛选群组" class="handle-select mr10">
@@ -18,9 +17,11 @@
             </el-select>
             <el-input v-model="select_word" placeholder="id" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="search">搜索</el-button>
-            <el-button style="float: right" type="default" icon="el-icon-plus" @click="search">新建</el-button>
+            <el-button style="float: right" type="default" icon="el-icon-plus" @click="dialogCreateFormVisible = true">新建</el-button>
         </div>
-        <el-table :data="data" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+
+        <!-- 显示设备 -->
+        <el-table :data="tableData" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="id" label="设备ID" sortable width="150">
             </el-table-column>
@@ -32,59 +33,91 @@
             </el-table-column>
             <el-table-column label="操作" :formatter="formatter">
                 <template scope="scope" align="right">
-                    <el-button size="small" type="primary"
-                               @click="handleEdit(scope.$index, scope.row)">状态</el-button>
-                    <el-button size="small"
-                               @click="dialogFormVisible = true">编辑</el-button>
-                    <el-button size="small" type="danger"
-                               @click="closeDialogVisible(scope)">删除</el-button>
+                        <!-- TODO:调用方法名称建议修改 -->
+                        <el-button size="small" type="primary"
+                                   @click="handleEdit(scope.$index, scope.row)">状态</el-button>
+                        <!-- TODO:此处应该调用方法先获取当前选择设备的信息 -->
+                        <el-button size="small"
+                                   @click="dialogEditFormVisible = true">编辑</el-button>
+                        <el-button size="small" type="danger"
+                                   @click="closeDelDialogVisible(scope)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
 
-
-        <el-dialog   title="编辑" :visible.sync="dialogFormVisible" >
-            <el-form :model="form" style="width:70%">
-                <el-form-item label="id"  :label-width="formLabelWidth">
-                    <el-input v-model="form.id" auto-complete="off"></el-input>
-                </el-form-item>
+        <!-- TODO:编辑设备 -->
+        <el-dialog  title="编辑" :visible.sync="dialogEditFormVisible" >
+            <el-form :model="editForm" style="width:70%">
                 <el-form-item label="名称" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="前缀" :label-width="formLabelWidth">
-                    <el-input v-model="form.prefix" auto-complete="off"></el-input>
+                    <el-input v-model="editForm.prefix" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="地址" :label-width="formLabelWidth">
-                    <el-input v-model="form.address" auto-complete="off"></el-input>
+                    <el-input v-model="editForm.address" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item  label="分组" :lable-width="formLabelWidth" >
-                    <el-select v-model="form.grope" auto-complete="off"></el-select>
+                    <el-select v-model="editForm.groups" auto-complete="off"></el-select>
                 </el-form-item>
 
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogEditFormVisible = false">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog
 
+        <!-- 新建设备 -->
+        <!-- TODO:居中问题需要解决 -->
+        <el-dialog  title="新建" :visible.sync="dialogCreateFormVisible" >
+            <el-form :model="createForm" style="width:70%">
+                <el-form-item label="名称" :label-width="formLabelWidth">
+                    <el-input v-model="createForm.deviceName" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" :label-width="formLabelWidth">
+                    <el-input v-model="createForm.deviceDescribe" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="前缀" :label-width="formLabelWidth">
+                    <el-input v-model="createForm.deviceNamePrefix" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="地址" :label-width="formLabelWidth">
+                    <el-input v-model="createForm.locationDescribe" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item  label="分组" :lable-width="formLabelWidth">
+                    <el-select v-model="createForm.groupId" auto-complete="off">
+                        <el-option
+                            v-for="item in this.groups"
+                            :key="item.id"
+                            :label="item.comment"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="createDevice()">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <!-- 删除确认 -->
+        <el-dialog
                 title="提示"
                 :visible.sync="is_delete"
-                width="30%"
-                :before-close="handleClose">
+                width="30%">
             <div>您确定删除  {{delete_messgae}}  吗？</div>
             <span slot="footer" class="dialog-footer">
-    <el-button @click="is_delete = false">取 消</el-button>
-    <el-button type="primary" @click="deleteConfirm()" >确 定</el-button>
-  </span>
+                <el-button @click="is_delete = false">取 消</el-button>
+                <el-button type="primary" @click="deleteConfirm()" >确 定</el-button>
+            </span>
         </el-dialog>
         <div class="pagination">
             <el-pagination
                     @current-change ="handleCurrentChange"
                     layout="prev, pager, next"
-                    :total="1000">
+                    :total="total">
             </el-pagination>
         </div>
     </div>
@@ -94,66 +127,70 @@
 
 
 <script>
-
-
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
+    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
+    import {getAllGroups} from "@/api/user/group"
     export default {
-        components: {ElSelectDropdown},
+        components: {
+            ElSelectDropdown
+        },
         data() {
             return {
                 dialogTableVisible: false,
-                dialogFormVisible: false,
-                form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                dialogEditFormVisible: false,
+                dialogCreateFormVisible: false,
+                createForm: {
+                    deviceDescribe: '',
+                    deviceName: '',
+                    deviceNamePrefix: '',
+                    // 经度纬度先确定 后期可以考虑获取方法
+                    latitude :"N39°54′6.74″",
+                    longitude : "E116°23′29.52″",
+                    locationDescribe: '',
+                    groupId:''
                 },
+                editForm: {
+                    // 类似上面 我还没看接口需要什么数据
+                },
+                groups:[],
                 formLabelWidth: '50%',
-                url: './static/vuetable.json',
                 tableData: [],
-                cur_page: 1,
+                cur_page: 0,
+                page_size:10,
+                total:0,
                 multipleSelection: [],
                 select_cate: '',
                 select_word: '',
                 del_list: [],
                 is_search: false,
-                delete_messgae:{},
-                is_delete:false,
-                delete_id:'',
-                scope:[]
-
+                is_delete: false,
+                delete_messgae: {},
+                delete_id: '',
+                scope: []
+    
             }
         },
-        created(){
+        created() {
             this.getData();
-        },
-        computed: {
-            data(){
-                const self = this;
-                return self.tableData.filter(function(d){
-                    return d;
-                })
-            }
+            this.fetchAllGroups();
         },
         methods: {
-            handleCurrentChange(val){
-                this.cur_page = val;
+            handleCurrentChange(val) {
+                this.cur_page = val - 1;
                 this.getData();
             },
-            getData(){
-                let self = this;
-                self.url = '/api/user/getAllDevices/0/10';
-                self.$axios.get(self.url).then((res) => {
-                    console.log(res.data.data.data);
-                    self.tableData = res.data.data.data;
+            getData() {
+                getAllDevices(this.cur_page,this.page_size).then((res) => {
+                    this.total = res.data.totalElements
+                    this.tableData = res.data.data;
                 })
             },
-            search(){
+            fetchAllGroups() {
+                getAllGroups().then((res) => {
+                    this.groups=res.data
+                })
+            },
+            search() {
                 this.is_search = true;
             },
             formatter(row, column) {
@@ -163,68 +200,74 @@
                 return row.tag === value;
             },
             handleEdit(index, row) {
-                this.$message('编辑第'+(index+1)+'行');
-                console.log(row);
+                this.$message('编辑第' + (index + 1) + '行');
             },
             handleDelete(index, row) {
-                this.$message.error('删除第'+(index+1)+'行');
+                this.$message.error('删除第' + (index + 1) + '行');
             },
-            delAll(){
+            delAll() {
                 const self = this,
                     length = self.multipleSelection.length;
                 let str = '';
                 self.del_list = self.del_list.concat(self.multipleSelection);
                 for (let i = 0; i < length; i++) {
                     str += self.multipleSelection[i].name + ' ';
+                    delADevice(self.multipleSelection[i].id)
                 }
-                self.$message.error('删除了'+str);
+                this.getData();
+                self.$message.error('删除了' + str);
                 self.multipleSelection = [];
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            handleClose(done) {
-                this.$confirm('确认关闭？')
-                    .then(_ => {
-                        done();
-                    })
-                    .catch(_ => {});
+            closeDelDialogVisible(scope) {
+                let row = scope.row;
+                this.delete_messgae = row.name;
+                this.is_delete = true;
+                this.delete_id = row.id;
             },
-            closeDialogVisible(scope){
-                let row=scope.row;
-                this.delete_messgae=row.name;
-                this.is_delete=true;
-                this.delete_id=row.id;
-            },
-            deleteConfirm(){
-                let self = this;
-                console.log(self.delete_id);
-                self.url = '/api/user/delete/'+self.delete_id;
-                this.is_delete=false;
-                this.$message({
+            deleteConfirm() {
+                delADevice(this.delete_id).then((res) => {
+                    this.$message({
                     showClose: true,
-                    message: '成功删除设备:'+self.delete_id,
+                    message: '成功删除设备ID:' + this.delete_id,
                     type: 'success'
-                });
-                self.$axios.delete(self.url).then((res) => {
-                    this.tableData.splice(this.scope.index, 1);
+                    });
+                    this.getData();
+                    this.is_delete = false;
                 })
             },
-            createADevice(){
-
+            createDevice() {
+                this.$confirm('确认新建设备？')
+                    .then(_ => {
+                        createADevice(this.createForm).then((res) => {
+                            this.getData();
+                        })
+                        this.getData();
+                        this.dialogCreateFormVisible = false;
+                        this.$message({
+                            showClose: true,
+                            message: '新建设备成功！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(_ => {});
             }
         }
     }
 </script>
 
 <style scoped>
-    .handle-box{
+    .handle-box {
         margin-bottom: 20px;
     }
-    .handle-select{
+    
+    .handle-select {
         width: 120px;
     }
-    .handle-input{
+    
+    .handle-input {
         width: 300px;
         display: inline-block;
     }
