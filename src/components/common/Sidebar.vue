@@ -82,6 +82,10 @@
                         index:'device',
                         title:'设备管理'
 
+                    },
+                    {   icon: 'el-icon-upload2',
+                        index: 'Test',
+                        title: '测试'
                     }
                 ]
             }

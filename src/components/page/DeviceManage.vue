@@ -8,7 +8,6 @@
                 <el-breadcrumb-item>基础表格</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-    
         <div class="handle-box">
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_cate" placeholder="筛选群组" class="handle-select mr10">
@@ -35,7 +34,7 @@
                 <template scope="scope" align="right">
                         <!-- TODO:调用方法名称建议修改 -->
                         <el-button size="small" type="primary"
-                                   @click="handleEdit(scope.$index, scope.row)">状态</el-button>
+                                   @click="getDeviceStatus(scope.$index, scope.row)">状态</el-button>
                         <!-- TODO:此处应该调用方法先获取当前选择设备的信息 -->
                         <el-button size="small"
                                    @click="dialogEditFormVisible = true">编辑</el-button>
@@ -120,6 +119,81 @@
                     :total="total">
             </el-pagination>
         </div>
+
+        <div id="status">
+            <el-dialog
+                    title="设备详细"
+                    :visible.sync="dialogVisible"
+                    width="30%">
+                <el-tabs v-model="activeName" >
+                    <el-tab-pane label="基本信息" name="first">
+                        <el-card shadow="hover" class="box-card">
+                            <el-row>
+                                <el-col :span="5"><div class="grid-content bg-purple">属性</div></el-col>
+                                <el-col :span="12"><div class="grid-content bg-purple-light"></div>值</el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="5"><div class="grid-content bg-purple">当前状态</div></el-col>
+                                <el-col :span="12"><div class="grid-content bg-purple-light"></div>{{statuss}}</el-col>
+                            </el-row>
+                            <el-row>
+                            <el-col :span="5"><div class="grid-content bg-purple">设备名</div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple-light">{{deviceId}}</div></el-col>
+                                </el-row>
+                            <el-row>
+                            <el-col :span="5"><div class="grid-content bg-purple">最后上线</div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple-light"></div>{{lastOnline}}</el-col>
+                            </el-row>
+                                <el-row>
+                                    <el-col :span="5"><div class="grid-content bg-purple">SDK-KEY</div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple-light"></div>{{sdkKey}}</el-col>
+                                    </el-row>
+                                    <el-row>
+                            <el-col :span="5"><div class="grid-content bg-purple">备注信息</div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple-light">{{remark}}</div></el-col>
+                                    </el-row>
+
+                        </el-card>
+                    </el-tab-pane>
+                    <el-tab-pane label="日志查看" name="second">
+                        <el-table
+                                style="width: 100%"
+                                :data="logdata">
+                            <el-table-column
+                                    prop="date"
+                                    label="日期"
+                                    width="250">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="event"
+                                    label="事件">
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
+                    <el-tab-pane label="执行命令" name="third">
+                        <div style="margin-top: 15px;">
+                            <el-input placeholder="请输入内容" class="input-with-select">
+                                <el-select slot="prepend" placeholder="请选择">
+                                    <el-option label="餐厅名" value="1"></el-option>
+                                    <el-option label="订单号" value="2"></el-option>
+                                    <el-option label="用户电话" value="3"></el-option>
+                                </el-select>
+                                <el-button slot="append" icon="el-icon-search"></el-button>
+                            </el-input>
+                        </div>
+                        <el-card class="box-card" style="margin-top: 20px">
+                            <div slot="header" class="clearfix">
+                                <h2>Web终端</h2>
+                            </div>
+                            <textarea readonly="readonly" class="terminal"></textarea>
+                        </el-card>
+                    </el-tab-pane>
+                </el-tabs>
+                <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+            </el-dialog>
+        </div>
     </div>
 
 
@@ -128,14 +202,24 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
+    import {getAllDevices, createADevice, delADevice,getDeviceDetails,getDeviceLog} from "@/api/user/device"
     import {getAllGroups} from "@/api/user/group"
+
     export default {
         components: {
             ElSelectDropdown
         },
         data() {
             return {
+                logdata:[],
+                dialogVisible: false,
+                activeName: 'first',
+                // input5:'{{select}}',
+                statuss:'',
+                deviceId:'',
+                lastOnline:'',
+                sdkKey:'',
+                remark:'',
                 dialogTableVisible: false,
                 dialogEditFormVisible: false,
                 dialogCreateFormVisible: false,
@@ -220,6 +304,7 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+                console.log(val);
             },
             closeDelDialogVisible(scope) {
                 let row = scope.row;
@@ -253,7 +338,21 @@
                         });
                     })
                     .catch(_ => {});
-            }
+            },
+            getDeviceStatus(index,row){
+                this.dialogVisible=true;
+                getDeviceDetails(row.id).then((res) =>{
+                     this.deviceId=res.data.id;
+                     this.statuss=res.data.isOnline;
+                     this.lastOnline=res.data.lastActiveDate;
+                     this.sdkKey=res.data.key;
+                     this.remark=res.data.describe;
+                });
+                getDeviceLog(row.id).then((res) =>{
+                    console.log(res.data.data);
+                    this.logdata=res.data.data;
+                });
+            },
         }
     }
 </script>
@@ -270,5 +369,14 @@
     .handle-input {
         width: 300px;
         display: inline-block;
+    }
+    .terminal {
+        width: 100%;
+        height: 200px;
+        color: #7fff00;
+        background-color: #000;
+    }
+    .el-row {
+        margin-bottom: 25px;
     }
 </style>

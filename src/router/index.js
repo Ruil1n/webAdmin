@@ -52,6 +52,10 @@ export default new Router({
                 {
                     path: '/device',
                     component: resolve => require(['../components/page/DeviceManage.vue'], resolve) //设备管理
+                },
+                {
+                    path: '/Test',
+                    component: resolve => require(['../components/page/Test.vue'], resolve) //测试页面
                 }
             ]
         },
