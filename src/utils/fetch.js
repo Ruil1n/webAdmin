@@ -31,7 +31,7 @@ service.interceptors.response.use(
             duration: 3 * 1000
           })
         router.replace({
-            path: '/',
+            path: '/login',
         })
       }
       Message({
