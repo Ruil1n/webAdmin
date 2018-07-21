@@ -86,6 +86,11 @@
                     {   icon: 'el-icon-upload2',
                         index: 'Test',
                         title: '测试'
+                    },
+                    {
+                        icon: 'el-icon-star-on',
+                        index: 'group',
+                        title: '群组管理'
                     }
                 ]
             }
