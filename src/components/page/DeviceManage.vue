@@ -124,7 +124,8 @@
             <el-dialog
                     title="设备详细"
                     :visible.sync="dialogVisible"
-                    width="30%">
+                    width="30%"
+                    :before-close="disConnect">
                 <el-tabs v-model="activeName" >
                     <el-tab-pane label="基本信息" name="first">
                         <el-card shadow="hover" class="box-card">
@@ -155,6 +156,7 @@
 
                         </el-card>
                     </el-tab-pane>
+                    <!-- TODO:分页 -->
                     <el-tab-pane label="日志查看" name="second">
                         <el-table
                                 style="width: 100%"
@@ -172,20 +174,21 @@
                     </el-tab-pane>
                     <el-tab-pane label="执行命令" name="third">
                         <div style="margin-top: 15px;">
-                            <el-input placeholder="请输入内容" class="input-with-select">
-                                <el-select slot="prepend" placeholder="请选择">
-                                    <el-option label="餐厅名" value="1"></el-option>
-                                    <el-option label="订单号" value="2"></el-option>
-                                    <el-option label="用户电话" value="3"></el-option>
+                            <el-input placeholder="请输入内容" v-model="cmd" class="input-with-select">
+                                <el-select v-model="cmd" slot="prepend" placeholder="请选择">
+                                    <el-option label="PING" value="PING"></el-option>
+                                    <el-option label="重启" value="REBOOT"></el-option>
+                                    <el-option label="SSH" value="SSH"></el-option>
                                 </el-select>
-                                <el-button slot="append" icon="el-icon-search"></el-button>
+                                <el-button slot="append" icon="el-icon-caret-right" @click="sendCmd"></el-button>
                             </el-input>
                         </div>
                         <el-card class="box-card" style="margin-top: 20px">
                             <div slot="header" class="clearfix">
                                 <h2>Web终端</h2>
                             </div>
-                            <textarea readonly="readonly" class="terminal"></textarea>
+                            <textarea readonly="readonly" v-model="consoleLog" class="terminal">
+                            </textarea>
                         </el-card>
                     </el-tab-pane>
                 </el-tabs>
@@ -202,8 +205,9 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllDevices, createADevice, delADevice,getDeviceDetails,getDeviceLog} from "@/api/user/device"
+    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
     import {getAllGroups} from "@/api/user/group"
+    import {getDeviceDetails, getDeviceLog, sendCmdToDevice} from "@/api/device"
 
     export default {
         components: {
@@ -250,8 +254,19 @@
                 is_delete: false,
                 delete_messgae: {},
                 delete_id: '',
-                scope: []
-    
+                scope: [],
+                cmd: '',
+                // 后期可以考虑从配置文件里读取连接地址
+                client: new Paho.MQTT.Client('39.108.153.134', 8083, ''), // 第三个参数是clientID可以为空
+                topicIn: '',
+                topicOut:'',
+                consoleLog:'Welcome to Web Console V1.0',
+                sendCmdInfo:{
+                    deviceId:'',
+                    payload:{
+                        cmd:''
+                    }
+                }
             }
         },
         created() {
@@ -347,12 +362,61 @@
                      this.lastOnline=res.data.lastActiveDate;
                      this.sdkKey=res.data.key;
                      this.remark=res.data.describe;
+                     this.connectEmq(this.sdkKey);
                 });
                 getDeviceLog(row.id).then((res) =>{
-                    console.log(res.data.data);
+                    //console.log(res.data.data);
                     this.logdata=res.data.data;
                 });
             },
+            connectEmq(sdkKey){
+                var path=sdkKey.replace(/-/g, '/');
+                this.topicIn='IN/DEVICE/'+path
+                this.topicOut='OUT/DEVICE/'+path
+                this.client.connect({
+                    userName:"websocket_client",
+                    password:"websocket_client",
+                    onSuccess: this.onConnect
+                }); // 连接服务器并注册连接成功处理事件
+                this.client.onConnectionLost = this.onConnectionLost; // 注册连接断开处理事件
+                this.client.onMessageArrived = this.onMessageArrived; // 注册消息接收处理事件
+
+            },
+            onConnectionLost(responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log('onConnectionLost:' + responseObject.errorMessage);
+                    console.log('连接已断开');
+                }
+            },
+            onMessageArrived(message) {
+                var str;
+                if(message.destinationName===this.topicIn){
+                    str='\nIN_>>'+message.payloadString;
+                    this.consoleLog+=str;
+                }
+                else if(message.destinationName===this.topicOut){
+                    str='\nOUT_>>'+message.payloadString;
+                    this.consoleLog+=str;
+                }
+                console.log("收到消息:"+message.payloadString);
+            },
+            onConnect(){
+                console.log('onConnected');
+                // 订阅主题
+                this.client.subscribe(this.topicIn); 
+                this.client.subscribe(this.topicOut);
+
+            },
+            disConnect(done){
+                console.log('disConnect');
+                this.client.disconnect();
+                done();
+            },
+            sendCmd(){
+                this.sendCmdInfo.payload.cmd=this.cmd;
+                this.sendCmdInfo.deviceId=this.deviceId;
+                sendCmdToDevice(this.sendCmdInfo);
+            }
         }
     }
 </script>

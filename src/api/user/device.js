@@ -23,21 +23,3 @@ export function createADevice(data) {
 export function delADevice(id) {
     return request.delete('/user/delete/'+id)
 }
-
-/**
- * 用户获取设备详细信息
- * @param DeviceId
- * @returns {*}
- */
-export function getDeviceDetails(DeviceId) {
-    return request.get('/device/getDeviceDetail/'+DeviceId)
-}
-
-/**
- * 用户获取设备日志
- * @param DeviceId
- * @returns {*}
- */
-export function getDeviceLog(DeviceId) {
-    return request.get('/device/getAllLogByPage/'+DeviceId+'/0/10')
-}
