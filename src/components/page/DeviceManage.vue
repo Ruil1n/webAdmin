@@ -9,14 +9,18 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box">
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-            <el-select v-model="select_cate" placeholder="筛选群组" class="handle-select mr10">
-                <el-option key="1" label="群组1" value="群组1"></el-option>
-                <el-option key="2" label="群组2" value="群组2"></el-option>
-            </el-select>
-            <el-input v-model="select_word" placeholder="id" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="search">搜索</el-button>
-            <el-button style="float: right" type="default" icon="el-icon-plus" @click="dialogCreateFormVisible = true">新建</el-button>
+            <el-row>
+                <el-col :span="5">
+                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+                </el-col>
+                <el-col :span="14">
+                    <el-input v-model="select_word" placeholder="设备信息" class="handle-input mr10"></el-input>
+                    <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                </el-col>
+                <el-col :span="5">
+                    <el-button style="float: right" type="default" icon="el-icon-plus" @click="dialogCreateFormVisible = true">新建</el-button>
+                </el-col>
+            </el-row>
         </div>
 
         <!-- 显示设备 -->
@@ -32,12 +36,11 @@
             </el-table-column>
             <el-table-column label="操作" :formatter="formatter">
                 <template scope="scope" align="right">
-                        <!-- TODO:调用方法名称建议修改 -->
                         <el-button size="small" type="primary"
                                    @click="getDeviceStatus(scope.$index, scope.row)">状态</el-button>
                         <!-- TODO:此处应该调用方法先获取当前选择设备的信息 -->
                         <el-button size="small"
-                                   @click="dialogEditFormVisible = true">编辑</el-button>
+                                   @click="editDeviceInfo(scope.row)">编辑</el-button>
                         <el-button size="small" type="danger"
                                    @click="closeDelDialogVisible(scope)">删除</el-button>
                 </template>
@@ -69,7 +72,6 @@
         </el-dialog>
 
         <!-- 新建设备 -->
-        <!-- TODO:居中问题需要解决 -->
         <el-dialog  title="新建" :visible.sync="dialogCreateFormVisible" >
             <el-form :model="createForm" style="width:70%">
                 <el-form-item label="名称" :label-width="formLabelWidth">
@@ -84,7 +86,7 @@
                 <el-form-item label="地址" :label-width="formLabelWidth">
                     <el-input v-model="createForm.locationDescribe" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item  label="分组" :lable-width="formLabelWidth">
+                <el-form-item label="分组" :label-width="formLabelWidth">
                     <el-select v-model="createForm.groupId" auto-complete="off">
                         <el-option
                             v-for="item in this.groups"
@@ -153,7 +155,6 @@
                             <el-col :span="5"><div class="grid-content bg-purple">备注信息</div></el-col>
                             <el-col :span="12"><div class="grid-content bg-purple-light">{{remark}}</div></el-col>
                                     </el-row>
-
                         </el-card>
                     </el-tab-pane>
                     <!-- TODO:分页 -->
@@ -205,11 +206,9 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-
+    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
     import {getAllGroups} from "@/api/user/group"
     import {getDeviceDetails, getDeviceLog, sendCmdToDevice} from "@/api/device"
-    import {getAllDevices, createADevice,delADevice} from "@/api/user/device"
-
 
     export default {
         components: {
@@ -230,13 +229,13 @@
                 dialogEditFormVisible: false,
                 dialogCreateFormVisible: false,
                 createForm: {
-                    deviceDescribe: '',
-                    deviceName: '',
-                    deviceNamePrefix: '',
+                    deviceDescribe: 'Device123',
+                    deviceName: 'Device123',
+                    deviceNamePrefix: 'Test',
                     // 经度纬度先确定 后期可以考虑获取方法
                     latitude :"N39°54′6.74″",
                     longitude : "E116°23′29.52″",
-                    locationDescribe: '',
+                    locationDescribe: 'hziee',
                     groupId:''
                 },
                 editForm: {
@@ -260,7 +259,7 @@
                 cmd: '',
                 // 后期可以考虑从配置文件里读取连接地址
                 client: new Paho.MQTT.Client('39.108.153.134', 8083, ''), // 第三个参数是clientID可以为空
-                topicIn: '',
+                topicEcho: '',
                 topicOut:'',
                 consoleLog:'Welcome to Web Console V1.0',
                 sendCmdInfo:{
@@ -289,6 +288,7 @@
             fetchAllGroups() {
                 getAllGroups().then((res) => {
                     this.groups=res.data
+                    this.createForm.groupId=this.groups[0].id
                 })
             },
             search() {
@@ -307,6 +307,21 @@
                 this.$message.error('删除第' + (index + 1) + '行');
             },
             delAll() {
+
+                this.$confirm('确认删除所选设备？')
+                    .then(_ => {
+                        const self = this,
+                            length = self.multipleSelection.length;
+                        let str = '';
+                        self.del_list = self.del_list.concat(self.multipleSelection);
+                        for (let i = 0; i < length; i++) {
+                            str += self.multipleSelection[i].name + ' ';
+                            delADevice(self.multipleSelection[i].id).then((res) =>{});
+                        }
+                        self.getData();
+                        self.$message.error('删除了' + str);
+                        self.multipleSelection = [];
+                    }).catch(_ => {});
                 const self = this,
                     length = self.multipleSelection.length;
                 let str = '';
@@ -373,8 +388,12 @@
                     this.logdata=res.data.data;
                 });
             },
+            editDeviceInfo(){
+                this.dialogEditFormVisible = true;
+            },
             connectEmq(sdkKey){
                 var path=sdkKey.replace(/-/g, '/');
+                this.topicEcho='IN/ECHO/'+path
                 this.topicIn='IN/ECHO/'+path
                 this.topicOut='OUT/DEVICE/'+path
                 this.client.connect({
@@ -394,8 +413,8 @@
             },
             onMessageArrived(message) {
                 var str;
-                if(message.destinationName===this.topicIn){
-                    str='\nIN_>>'+message.payloadString;
+                if(message.destinationName===this.topicEcho){
+                    str='\nECHO_>>'+message.payloadString;
                     this.consoleLog+=str;
                 }
                 else if(message.destinationName===this.topicOut){
@@ -407,12 +426,14 @@
             onConnect(){
                 console.log('onConnected');
                 // 订阅主题
-                this.client.subscribe(this.topicIn); 
+                this.client.subscribe(this.topicEcho); 
                 this.client.subscribe(this.topicOut);
             },
             disConnect(done){
                 console.log('disConnect');
                 this.client.disconnect();
+                this.consoleLog='Welcome to Web Console V1.0';
+                this.cmd='';
                 done();
             },
             sendCmd(){
