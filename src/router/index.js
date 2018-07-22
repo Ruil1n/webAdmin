@@ -56,6 +56,11 @@ export default new Router({
                 {
                     path: '/Test',
                     component: resolve => require(['../components/page/Test.vue'], resolve) //测试页面
+                },
+                {
+                    path: '/group',
+                    component: resolve => require(['../components/page/GroupManage.vue'], resolve) //测试页面
+
                 }
             ]
         },

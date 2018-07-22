@@ -4,8 +4,8 @@
         <!-- TODO:需要修改 -->
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 表格</el-breadcrumb-item>
-                <el-breadcrumb-item>基础表格</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-menu"></i>设备</el-breadcrumb-item>
+                <el-breadcrumb-item>管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box">
@@ -206,9 +206,11 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
+
     import {getAllGroups} from "@/api/user/group"
     import {getDeviceDetails, getDeviceLog, sendCmdToDevice} from "@/api/device"
+    import {getAllDevices, createADevice, delADevice,getDeviceDetails,getDeviceLog} from "@/api/user/device"
+
 
     export default {
         components: {
