@@ -23,3 +23,5 @@ export function createADevice(data) {
 export function delADevice(id) {
     return request.delete('/user/delete/'+id)
 }
+
+

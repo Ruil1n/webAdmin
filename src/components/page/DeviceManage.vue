@@ -208,7 +208,7 @@
 
     import {getAllGroups} from "@/api/user/group"
     import {getDeviceDetails, getDeviceLog, sendCmdToDevice} from "@/api/device"
-    import {getAllDevices, createADevice, delADevice,getDeviceDetails,getDeviceLog} from "@/api/user/device"
+    import {getAllDevices, createADevice,delADevice} from "@/api/user/device"
 
 
     export default {
@@ -313,9 +313,11 @@
                 self.del_list = self.del_list.concat(self.multipleSelection);
                 for (let i = 0; i < length; i++) {
                     str += self.multipleSelection[i].name + ' ';
-                    delADevice(self.multipleSelection[i].id)
+                    delADevice(self.multipleSelection[i].id).then((res) => {
+
+                    })
+                    this.getData();
                 }
-                this.getData();
                 self.$message.error('删除了' + str);
                 self.multipleSelection = [];
             },
@@ -373,7 +375,7 @@
             },
             connectEmq(sdkKey){
                 var path=sdkKey.replace(/-/g, '/');
-                this.topicIn='IN/DEVICE/'+path
+                this.topicIn='IN/ECHO/'+path
                 this.topicOut='OUT/DEVICE/'+path
                 this.client.connect({
                     userName:"websocket_client",
@@ -407,7 +409,6 @@
                 // 订阅主题
                 this.client.subscribe(this.topicIn); 
                 this.client.subscribe(this.topicOut);
-
             },
             disConnect(done){
                 console.log('disConnect');

@@ -6,3 +6,7 @@ import request from '@/utils/fetch'
 export function getAllGroups() {
     return request.get('/user/getAllGroupByPage/0/10')
 }
+
+export function sendCmdToGroup(data) {
+    return request.post('/api/v1/sendCmdToGroup',data)
+}
