@@ -307,17 +307,18 @@
                 this.$message.error('删除第' + (index + 1) + '行');
             },
             delAll() {
-                this.$confirm('确认删除所选设备？')
+                const self = this;
+                self.$confirm('确认删除所选设备？')
                     .then(_ => {
-                        const self = this,
-                            length = self.multipleSelection.length;
+                        length = self.multipleSelection.length;
                         let str = '';
                         self.del_list = self.del_list.concat(self.multipleSelection);
                         for (let i = 0; i < length; i++) {
                             str += self.multipleSelection[i].name + ' ';
-                            delADevice(self.multipleSelection[i].id).then((res) =>{});
+                            delADevice(self.multipleSelection[i].id).then((res) =>{
+                                self.getData();
+                            });
                         }
-                        self.getData();
                         self.$message.error('删除了' + str);
                         self.multipleSelection = [];
                     }).catch(_ => {});
@@ -349,7 +350,6 @@
                         createADevice(this.createForm).then((res) => {
                             this.getData();
                         })
-                        this.getData();
                         this.dialogCreateFormVisible = false;
                         this.$message({
                             showClose: true,
