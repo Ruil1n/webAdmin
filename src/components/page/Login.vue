@@ -49,9 +49,9 @@
                                 // window.localStorage.setItem('avatar',data.data.avatar);
                                 // window.localStorage.setItem('email',data.data.email);
                                 // window.localStorage.setItem('phone',data.data.phone);
-                            
+                                self.$router.replace({ path: '/dashboard' })
                             })
-                        self.$router.replace({ path: '/dashboard' })
+                        //self.$router.replace({ path: '/dashboard' })
                     }).catch(() => {
                     })
                     } else {
