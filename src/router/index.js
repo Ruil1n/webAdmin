@@ -61,6 +61,21 @@ export default new Router({
                     path: '/group',
                     component: resolve => require(['../components/page/GroupManage.vue'], resolve) //测试页面
 
+                },
+                {
+                    path: '/admin/device',
+                    component: resolve => require(['../components/page/admin/DeviceManage.vue'], resolve) //测试页面
+
+                },
+                {
+                    path: '/admin/group',
+                    component: resolve => require(['../components/page/admin/GroupManage.vue'], resolve) //测试页面
+
+                },
+                {
+                    path: '/admin/power',
+                    component: resolve => require(['../components/page/admin/Power.vue'], resolve) //测试页面
+
                 }
             ]
         },
