@@ -349,7 +349,6 @@
                         createADevice(this.createForm).then((res) => {
                             this.getData();
                         })
-                        this.getData();
                         this.dialogCreateFormVisible = false;
                         this.$message({
                             showClose: true,

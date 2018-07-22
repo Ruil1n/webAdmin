@@ -21,13 +21,14 @@
 
 <script>
 // 如果需要分权限显示不同的目录再改 目前默认都显示这些
+    import { getCurrentUserInfo } from '@/api/user'
     export default {
         data() {
             return {
-                items: [
+                userItems: [
                     {
                         icon: 'el-icon-setting',
-                        index: 'dashboard',
+                        index: '/dashboard',
                         title: '系统首页'
                     },
                     {
@@ -36,11 +37,11 @@
                         title: '表格',
                         subs: [
                             {
-                                index: 'basetable',
+                                index: '/basetable',
                                 title: '基础表格'
                             },
                             {
-                                index: 'vuetable',
+                                index: '/vuetable',
                                 title: 'Vue表格组件'
                             }
                         ]
@@ -51,55 +52,88 @@
                         title: '表单',
                         subs: [
                             {
-                                index: 'baseform',
+                                index: '/baseform',
                                 title: '基本表单'
                             },
                             {
-                                index: 'vueeditor',
+                                index: '/vueeditor',
                                 title: '编辑器'
                             },
                             {
-                                index: 'markdown',
+                                index: '/markdown',
                                 title: 'markdown'
                             },
                             {
-                                index: 'upload',
+                                index: '/upload',
                                 title: '文件上传'
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-star-on',
-                        index: 'basecharts',
+                        index: '/basecharts',
                         title: '图表'
                     },
                     {
                         icon: 'el-icon-upload2',
-                        index: 'drag',
+                        index: '/drag',
                         title: '拖拽'
                     },
                     {   icon:'el-icon-star-on',
-                        index:'device',
+                        index:'/device',
                         title:'设备管理'
 
                     },
                     {   icon: 'el-icon-upload2',
-                        index: 'Test',
+                        index: '/Test',
                         title: '测试'
                     },
                     {
                         icon: 'el-icon-star-on',
-                        index: 'group',
+                        index: '/group',
                         title: '群组管理'
                     }
-                ]
+                    ],
+                adminItems:
+                    {
+                    icon: 'el-icon-star-on',
+                    index: '1',
+                    title: '系统管理',
+                        subs:[
+                            {
+                                index: '/admin/device',
+                                title: '设备管理'
+                            },
+                            {
+                                index: '/admin/group',
+                                title: '群组管理'
+                            },
+                            {
+                                index: '/admin/power',
+                                title: '高级权限'
+                            }
+                        ]
+                    },
+                items: []
             }
         },
         computed:{
             onRoutes(){
                 return this.$route.path.replace('/','');
             }
-        }
+        },
+        created() {
+            getCurrentUserInfo().then((data) => {
+                console.log(data.data.authorities.indexOf("ROLE_ADMIN"))
+                if(data.data.authorities.indexOf("ROLE_ADMIN")=== -1){
+                    this.items=this.userItems;
+                }else{
+                    this.items=this.userItems;
+                    this.items.push(this.adminItems);
+                }
+                
+            })
+        },
     }
 </script>
 
