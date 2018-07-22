@@ -206,11 +206,9 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-
+    import {getAllDevices, createADevice, delADevice} from "@/api/user/device"
     import {getAllGroups} from "@/api/user/group"
     import {getDeviceDetails, getDeviceLog, sendCmdToDevice} from "@/api/device"
-    import {getAllDevices, createADevice, delADevice,getDeviceDetails,getDeviceLog} from "@/api/user/device"
-
 
     export default {
         components: {
@@ -290,7 +288,7 @@
             fetchAllGroups() {
                 getAllGroups().then((res) => {
                     this.groups=res.data
-                    this.createForm.groupId=res.data[0].id
+                    this.createForm.groupId=this.groups[0].id
                 })
             },
             search() {
