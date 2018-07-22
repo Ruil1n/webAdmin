@@ -28,7 +28,7 @@
             <el-table-column label="操作" width="230">
                 <template scope="scope">
                     <el-button size="small"
-                               @click="handleEdit(scope.$index, scope.row)">分组广播</el-button>
+                               @click="broadCast(scope)">分组广播</el-button>
                     <el-button size="small"
                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button size="small" type="danger"
@@ -36,6 +36,28 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <el-dialog
+                title="提示"
+                :visible.sync="dialogVisible"
+                width="30%">
+            <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item
+                        label="广播"
+                        :rules="[
+      { required: true, message: '内容不能为空'},
+    ]"
+                >
+                    <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
+                    <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+
+        </el-dialog>
+
         <div class="pagination">
             <el-pagination
                     @current-change ="handleCurrentChange"
@@ -47,18 +69,34 @@
 </template>
 
 <script>
-    import {getAllGroups} from "@/api/user/group"
+    import {getAllGroups,sendCmdToGroup} from "@/api/user/group"
     export default {
         data() {
             return {
                 url: './static/vuetable.json',
+                dialogVisible: false,
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
                 select_cate: '',
                 select_word: '',
                 del_list: [],
-                is_search: false
+                is_search: false,
+                sendCmdToGroupInfo:{
+                    groupId:'',
+                    payload:{
+                        message:''
+                    },
+                },
+                input: '',
+                numberValidateForm: {
+                    age: ''
+                },
+                temp_scope:[],
+                content:''
+
+
+
             }
         },
         created(){
@@ -71,6 +109,9 @@
             }
         },
         methods: {
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            },
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
@@ -78,7 +119,6 @@
             getData(){
                 let self = this;
                 getAllGroups().then((res) => {
-                    console.log(res.data.data);
                     self.tableData = res.data.data;
                 })
             },
@@ -112,6 +152,28 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+
+                        this.sendCmdToGroupInfo.groupId=this.temp_scope.row.id;
+                        this.sendCmdToGroupInfo.payload.message=this.numberValidateForm.age;
+
+
+                        sendCmdToGroup(this.sendCmdToGroupInfo).then((res) => {
+                            alert('提交成功');
+                            this.dialogVisible=false;
+                        })
+                    } else {
+                        console.log('内容不能为空!');
+                        return false;
+                    }
+                });
+            },
+            broadCast(scope){
+                this.dialogVisible=true;
+                this.temp_scope=scope;
+            }
 
         }
     }

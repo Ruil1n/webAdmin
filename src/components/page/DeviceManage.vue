@@ -307,6 +307,7 @@
                 this.$message.error('删除第' + (index + 1) + '行');
             },
             delAll() {
+
                 this.$confirm('确认删除所选设备？')
                     .then(_ => {
                         const self = this,
@@ -321,6 +322,19 @@
                         self.$message.error('删除了' + str);
                         self.multipleSelection = [];
                     }).catch(_ => {});
+                const self = this,
+                    length = self.multipleSelection.length;
+                let str = '';
+                self.del_list = self.del_list.concat(self.multipleSelection);
+                for (let i = 0; i < length; i++) {
+                    str += self.multipleSelection[i].name + ' ';
+                    delADevice(self.multipleSelection[i].id).then((res) => {
+
+                    })
+                    this.getData();
+                }
+                self.$message.error('删除了' + str);
+                self.multipleSelection = [];
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -380,6 +394,7 @@
             connectEmq(sdkKey){
                 var path=sdkKey.replace(/-/g, '/');
                 this.topicEcho='IN/ECHO/'+path
+                this.topicIn='IN/ECHO/'+path
                 this.topicOut='OUT/DEVICE/'+path
                 this.client.connect({
                     userName:"websocket_client",
@@ -413,7 +428,6 @@
                 // 订阅主题
                 this.client.subscribe(this.topicEcho); 
                 this.client.subscribe(this.topicOut);
-
             },
             disConnect(done){
                 console.log('disConnect');
