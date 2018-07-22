@@ -6,15 +6,23 @@
                 <el-breadcrumb-item>管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
+
+
         <div class="handle-box">
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-            <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
-                <el-option key="1" label="广东省" value="广东省"></el-option>
-                <el-option key="2" label="湖南省" value="湖南省"></el-option>
-            </el-select>
-            <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="search">搜索</el-button>
+            <el-row>
+                <el-col :span="5">
+                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+                </el-col>
+                <el-col :span="14">
+                    <el-input v-model="select_word" placeholder="设备信息" class="handle-input mr10"></el-input>
+                    <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                </el-col>
+                <el-col :span="5">
+                    <el-button style="float: right" type="default" icon="el-icon-plus" @click="dialogCreateFormVisible = true">新建</el-button>
+                </el-col>
+            </el-row>
         </div>
+
         <el-table :data="data" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="id" label="组ID" sortable width="150">
@@ -30,7 +38,7 @@
                     <el-button size="small"
                                @click="broadCast(scope)">分组广播</el-button>
                     <el-button size="small"
-                               @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                               @click="handleEdit(scope)">编辑</el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -58,25 +66,63 @@
 
         </el-dialog>
 
+
+        <!-- 新建群组 -->
+        <el-dialog  title="新建群组" :visible.sync="dialogCreateFormVisible">
+            <el-form :model="createForm">
+                <el-form-item label="分组名">
+                    <el-input v-model="createForm.groupName" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="createForm.comment" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="createGroup()">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <!-- 编辑群组 -->
+        <el-dialog  title="编辑群组" :visible.sync="dialogEditFormVisible" >
+            <el-form :model="editable">
+                <el-form-item label="群组ID">
+                    <el-input v-model="editable.groupId" :disabled="true" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="分组名">
+                    <el-input v-model="editable.groupName" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="editable.comment" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editGroup()">确 定</el-button>
+            </div>
+        </el-dialog>
+
         <div class="pagination">
             <el-pagination
                     @current-change ="handleCurrentChange"
                     layout="prev, pager, next"
-                    :total="1000">
+                    :total="total">
             </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
-    import {getAllGroups,sendCmdToGroup} from "@/api/user/group"
+    import {getAllGroupsByPage,sendCmdToGroup,createAGroup,updateGroup} from "@/api/user/group"
     export default {
         data() {
             return {
                 url: './static/vuetable.json',
                 dialogVisible: false,
                 tableData: [],
-                cur_page: 1,
+                cur_page: 0,
+                page_size:10,
+                total:'',
                 multipleSelection: [],
                 select_cate: '',
                 select_word: '',
@@ -93,10 +139,18 @@
                     age: ''
                 },
                 temp_scope:[],
-                content:''
-
-
-
+                content:'',
+                createForm: {
+                    groupName: 'GROUP0001',
+                    comment: '备注信息',
+                },
+                dialogCreateFormVisible:false,
+                dialogEditFormVisible:false,
+                editable: {
+                    comment: '',
+                    groupId:'',
+                    groupName: '',
+                },
             }
         },
         created(){
@@ -113,13 +167,13 @@
                 this.$refs[formName].resetFields();
             },
             handleCurrentChange(val){
-                this.cur_page = val;
+                this.cur_page = val - 1;
                 this.getData();
             },
             getData(){
-                let self = this;
-                getAllGroups().then((res) => {
-                    self.tableData = res.data.data;
+                getAllGroupsByPage(this.cur_page,this.page_size).then((res) => {
+                    this.total = res.data.totalElements;
+                    this.tableData = res.data.data;
                 })
             },
             search(){
@@ -131,8 +185,12 @@
             filterTag(value, row) {
                 return row.tag === value;
             },
-            handleEdit(index, row) {
-                this.$message('编辑第'+(index+1)+'行');
+            handleEdit(scope) {
+                this.dialogEditFormVisible=true;
+                this.editable.groupId=scope.row.id;
+                this.editable.comment=scope.row.comment;
+                this.editable.groupName=scope.row.name;
+
             },
             handleDelete(index, row) {
                 this.$message.error('删除第'+(index+1)+'行');
@@ -173,6 +231,19 @@
             broadCast(scope){
                 this.dialogVisible=true;
                 this.temp_scope=scope;
+            },
+            createGroup(){
+                createAGroup(this.createForm).then((res) => {
+                    this.getData();
+                    this.dialogCreateFormVisible=false;
+                });
+            },
+            editGroup(){
+                updateGroup(this.editable).then((res) => {
+                    this.getData();
+                    this.dialogEditFormVisible=false;
+                    this.$message.success("成功编辑群组"+this.editable.groupId);
+                });
             }
 
         }
