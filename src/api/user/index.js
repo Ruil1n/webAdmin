@@ -1,5 +1,21 @@
 import request from '@/utils/fetch'
 
+
+import Cookies from 'js-cookie'
+
+const TokenKey = 'JSESSIONID'
+
+export function getToken() {
+    return Cookies.get(TokenKey)
+}
+
+export function setToken(token) {
+    return Cookies.set(TokenKey, token)
+}
+
+export function removeToken() {
+    return Cookies.remove(TokenKey)
+}
 /**
  * 用户登陆接口
  * @param {JSON} data
