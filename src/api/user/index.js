@@ -3,7 +3,7 @@ import request from '@/utils/fetch'
 
 import Cookies from 'js-cookie'
 
-const TokenKey = 'JSESSIONID'
+const TokenKey = '"JSESSIONID"'
 
 export function getToken() {
     return Cookies.get(TokenKey)
@@ -14,8 +14,12 @@ export function setToken(token) {
 }
 
 export function removeToken() {
-    return Cookies.remove(TokenKey)
+    return Cookies.remove(TokenKey,{path:'/'})
 }
+export function logout(id) {
+    return request.get('/logOut')
+}
+
 /**
  * 用户登陆接口
  * @param {JSON} data

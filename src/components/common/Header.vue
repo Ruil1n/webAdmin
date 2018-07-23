@@ -15,7 +15,7 @@
     </div>
 </template>
 <script>
-    import {removeToken,setToken} from "@/api/user/index"
+    import {logout} from "@/api/user/index"
     export default {
         data() {
             return {
@@ -37,7 +37,7 @@
             handleCommand(command) {
                 if(command == 'loginout'){
                     localStorage.removeItem('username');
-                    removeToken();
+                    logout();
                     this.$router.push('/login');
 
                 }
