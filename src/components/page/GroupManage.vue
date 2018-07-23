@@ -122,7 +122,7 @@
                 tableData: [],
                 cur_page: 0,
                 page_size:10,
-                total:'',
+                total:0,
                 multipleSelection: [],
                 select_cate: '',
                 select_word: '',

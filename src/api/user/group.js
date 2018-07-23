@@ -14,7 +14,7 @@ export function getAllGroupsByPage(cur_page,page_size) {
  */
 export function getAllGroups() {
 
-    return request.get('/user/getAllGroupByPage/0/10')
+    return request.get('/user/getALlGroups')
 }
 
 /**
