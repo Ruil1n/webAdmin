@@ -18,7 +18,7 @@
                     <el-button type="primary" icon="search" @click="search">搜索</el-button>
                 </el-col>
                 <el-col :span="5">
-                    <el-button style="float: right" type="default" icon="el-icon-plus" @click="dialogCreateFormVisible = true">新建</el-button>
+                    <el-button style="float: right" type="default" icon="el-icon-plus" @click="newDevice()">新建</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -32,7 +32,7 @@
             </el-table-column>
             <el-table-column prop="describe" label="备注" width="120">
             </el-table-column>
-            <el-table-column prop="location.describe" label="地址" width="120">
+            <el-table-column prop="groupName" label="群组名称" width="120">
             </el-table-column>
             <el-table-column label="操作" :formatter="formatter">
                 <template scope="scope" align="right">
@@ -87,11 +87,11 @@
                     <el-input v-model="createForm.locationDescribe" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="分组" :label-width="formLabelWidth">
-                    <el-select v-model="createForm.groupId" auto-complete="off">
+                    <el-select v-model="createForm.groupId" placeholder="请选择">
                         <el-option
                             v-for="item in this.groups"
                             :key="item.id"
-                            :label="item.comment"
+                            :label="item.name"
                             :value="item.id">
                         </el-option>
                     </el-select>
@@ -267,7 +267,7 @@
                     payload:{
                         cmd:''
                     }
-                }
+                },
             }
         },
         created() {
@@ -325,7 +325,6 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
-                console.log(val);
             },
             closeDelDialogVisible(scope) {
                 let row = scope.row;
@@ -426,6 +425,13 @@
                 this.sendCmdInfo.payload.cmd=this.cmd;
                 this.sendCmdInfo.deviceId=this.deviceId;
                 sendCmdToDevice(this.sendCmdInfo);
+            },
+            newDevice(){
+                this.dialogCreateFormVisible = true
+                getAllGroups().then((res) => {
+                    console.log(res.data.data);
+                    this.groups=res.data.data;
+                })
             }
         }
     }
