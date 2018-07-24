@@ -24,4 +24,10 @@ export function delADevice(id) {
     return request.delete('/user/delete/'+id)
 }
 
+/**
+ * 用户查看自己的设备状况
+ */
+export function getCurrentState() {
+    return request.get('/user/getCurrentState')
+}
 
