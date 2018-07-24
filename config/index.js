@@ -30,7 +30,7 @@ module.exports = {
         proxyTable: {
             '/api':{
                 // target:'http://smp.rui0.cn/',
-                target:'http://127.0.0.1:2500/',
+                target:'http://localhost:2500/',
                 changeOrigin:true,
                 pathRewrite:{
                     '/api':''

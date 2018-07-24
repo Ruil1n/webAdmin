@@ -156,7 +156,9 @@
             getSystemInfo().then((data) => {
                 this.system = data.data
             })
+
             this.getLog();
+
             // emq接口有问题 先把数据写成成默认的了
             /*
             getEmqInfo().then((data) => {

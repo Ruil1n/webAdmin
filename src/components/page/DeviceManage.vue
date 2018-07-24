@@ -287,8 +287,10 @@
             },
             fetchAllGroups() {
                 getAllGroups().then((res) => {
-                    this.groups=res.data
-                    this.createForm.groupId=this.groups[0].id
+
+                    this.groups=res.data;
+                    console.log(this.groups);
+                    this.createForm.groupId=this.groups[0].id;
                 })
             },
             search() {
@@ -428,6 +430,11 @@
             },
             newDevice(){
                 this.dialogCreateFormVisible = true
+
+                getAllGroups().then((res) => {
+                    console.log(res.data.data);
+                })
+
             }
         }
     }
