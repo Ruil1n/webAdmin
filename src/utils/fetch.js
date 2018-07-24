@@ -6,8 +6,7 @@ import {
 } from 'element-ui'
 import {
     STATE_WRONG,
-    STATE_OK,
-    STATE_UNAUTHORIZED
+    STATE_OK
 } from '@/config'
 
 // 创建axios实例
@@ -24,16 +23,6 @@ service.interceptors.response.use(
       message
     } = response.data
     if (state !== STATE_OK) {
-      if (state === STATE_UNAUTHORIZED) {
-        Message({
-            message: message || '用户未登陆',
-            type: 'error',
-            duration: 3 * 1000
-          })
-        router.replace({
-            path: '/login',
-        })
-      }
       Message({
         message: message || '操作失败!',
         type: 'error',
