@@ -1,21 +1,8 @@
 import request from '@/utils/fetch'
-
-
-import Cookies from 'js-cookie'
-
-const TokenKey = '"JSESSIONID"'
-
-export function getToken() {
-    return Cookies.get(TokenKey)
-}
-
-export function setToken(token) {
-    return Cookies.set(TokenKey, token)
-}
-
-export function removeToken() {
-    return Cookies.remove(TokenKey,{path:'/'})
-}
+/**
+ * 用户退出接口
+ * @param {Number} id 
+ */
 export function logout(id) {
     return request.get('/logOut')
 }

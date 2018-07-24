@@ -39,7 +39,6 @@
                     localStorage.removeItem('username');
                     logout();
                     this.$router.push('/login');
-
                 }
             }
         }

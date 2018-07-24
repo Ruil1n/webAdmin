@@ -29,10 +29,10 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api':{
-                target:'http://localhost:2500/',
+                target:'http://smp.rui0.cn/',
                 changeOrigin:true,
                 pathRewrite:{
-                    '/api':''
+                    // '/api':''
                 }
             },
             '/ms':{

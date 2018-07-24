@@ -147,7 +147,6 @@
                 this.state = data.data
             })
             getSystemInfo().then((data) => {
-                console.log(data.data)
                 this.system = data.data
             })
     
