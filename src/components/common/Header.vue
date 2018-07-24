@@ -15,10 +15,11 @@
     </div>
 </template>
 <script>
+    import {logout} from "@/api/user/index"
     export default {
         data() {
             return {
-                name: 'ruilin',
+                name: '',
                 avt: '../../../static/img/img.jpg'
             }
         },
@@ -35,8 +36,10 @@
         methods:{
             handleCommand(command) {
                 if(command == 'loginout'){
-                    localStorage.removeItem('username')
+                    localStorage.removeItem('username');
+                    logout();
                     this.$router.push('/login');
+
                 }
             }
         }

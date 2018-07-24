@@ -124,7 +124,7 @@
         },
         created() {
             getCurrentUserInfo().then((data) => {
-                console.log(data.data.authorities.indexOf("ROLE_ADMIN"))
+                // console.log(data.data.authorities.indexOf("ROLE_ADMIN"))
                 if(data.data.authorities.indexOf("ROLE_ADMIN")=== -1){
                     this.items=this.userItems;
                 }else{

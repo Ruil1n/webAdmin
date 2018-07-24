@@ -44,6 +44,7 @@
                         login(self.ruleForm).then((res) => {
                             getCurrentUserInfo().then((data) => {
                                 window.localStorage.setItem('username',data.data.username);
+                                // console.log(JSON.stringify(data.data.username));
                                 // window.localStorage.setItem('UID',data.data.UID);
                                 // window.localStorage.setItem('authorities',data.data.authorities);
                                 // window.localStorage.setItem('avatar',data.data.avatar);
@@ -51,7 +52,6 @@
                                 // window.localStorage.setItem('phone',data.data.phone);
                                 self.$router.replace({ path: '/dashboard' })
                             })
-                        //self.$router.replace({ path: '/dashboard' })
                     }).catch(() => {
                     })
                     } else {
