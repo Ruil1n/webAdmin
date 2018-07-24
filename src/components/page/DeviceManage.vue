@@ -32,7 +32,7 @@
             </el-table-column>
             <el-table-column prop="describe" label="备注" width="120">
             </el-table-column>
-            <el-table-column prop="location.describe" label="地址" width="120">
+            <el-table-column prop="groupName" label="群组名称" width="120">
             </el-table-column>
             <el-table-column label="操作" :formatter="formatter">
                 <template scope="scope" align="right">

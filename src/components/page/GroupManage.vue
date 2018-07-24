@@ -24,8 +24,8 @@
         </div>
 
         <el-table :data="data" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="id" label="组ID" sortable width="150">
+            <el-table-column type="selection" width="45"></el-table-column>
+            <el-table-column prop="id" label="组ID" sortable width="140">
             </el-table-column>
             <el-table-column prop="name" label="名称" width="120">
             </el-table-column>
@@ -33,7 +33,7 @@
             </el-table-column>
             <el-table-column prop="create_time" label="操作时间" width="150">
             </el-table-column>
-            <el-table-column label="操作" width="230">
+            <el-table-column label="操作" width="235">
                 <template scope="scope">
                     <el-button size="small"
                                @click="broadCast(scope)">分组广播</el-button>
