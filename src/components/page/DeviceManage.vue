@@ -49,27 +49,39 @@
 
 
         <!-- TODO:编辑设备 -->
-        <el-dialog  title="编辑" :visible.sync="dialogEditFormVisible" >
-            <el-form :model="editForm" style="width:70%">
-                <el-form-item label="名称" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="前缀" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.prefix" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="地址" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.address" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item  label="分组" :lable-width="formLabelWidth" >
-                    <el-select v-model="editForm.groups" auto-complete="off"></el-select>
-                </el-form-item>
-
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogEditFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogEditFormVisible = false">确 定</el-button>
-            </div>
-        </el-dialog>
+            <el-dialog  title="新建" :visible.sync="dialogEditFormVisible" >
+                <el-form :model="createForm" style="width:70%">
+                    <el-form-item label="设备ID" :label-width="formLabelWidth">
+                        <el-input v-model="createForm.deviceName" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="名称" :label-width="formLabelWidth">
+                        <el-input v-model="createForm.deviceName" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注" :label-width="formLabelWidth">
+                        <el-input v-model="createForm.deviceDescribe" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="前缀" :label-width="formLabelWidth">
+                        <el-input v-model="createForm.deviceNamePrefix" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="地址" :label-width="formLabelWidth">
+                        <el-input v-model="createForm.locationDescribe" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="分组" :label-width="formLabelWidth">
+                        <el-select v-model="createForm.groupId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in this.groups"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="createDevice()">确 定</el-button>
+                </div>
+            </el-dialog>
 
         <!-- 新建设备 -->
         <el-dialog  title="新建" :visible.sync="dialogCreateFormVisible" >
@@ -375,8 +387,9 @@
                     this.logdata=res.data.data;
                 });
             },
-            editDeviceInfo(){
+            editDeviceInfo(row){
                 this.dialogEditFormVisible = true;
+
             },
             connectEmq(sdkKey){
                 var path=sdkKey.replace(/-/g, '/');

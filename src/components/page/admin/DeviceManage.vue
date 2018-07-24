@@ -237,7 +237,7 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllDevices,getDeviceDetail,delADevice} from "@/api/admin/device";
+    import {getAllDevices,getDeviceDetail,delADevice,selectDevice} from "@/api/admin/device";
     import {getDeviceLog, sendCmdToDevice} from "@/api/device"
     export default {
         components: {
@@ -280,7 +280,6 @@
                 select_cate: '',
                 select_word: '',
                 del_list: [],
-                is_search: false,
                 is_delete: false,
                 delete_messgae: {},
                 delete_id: '',
@@ -314,7 +313,11 @@
                 })
             },
             search() {
-                this.is_search = true;
+                selectDevice(this.select_word).then((res)=>{
+
+                    this.tableData = res.data;
+                })
+
             },
             formatter(row, column) {
                 return row.address;

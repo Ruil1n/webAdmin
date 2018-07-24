@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58ff2166-2b9d-447d-ad8f-d3ceac294436" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/page/admin/AllUser.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/page/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/page/Dashboard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/admin/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/admin/device.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/page/DeviceManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/page/DeviceManage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,26 +26,26 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="76" />
-          <entry key="vue" value="221" />
+          <entry key="js" value="101" />
+          <entry key="vue" value="266" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="76" />
-          <entry key="Vue.js" value="221" />
+          <entry key="JavaScript" value="101" />
+          <entry key="Vue.js" value="266" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="18" />
-          <entry key="vue" value="9" />
+          <entry key="js" value="19" />
+          <entry key="vue" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="18" />
-          <entry key="Vue.js" value="9" />
+          <entry key="JavaScript" value="19" />
+          <entry key="Vue.js" value="11" />
         </counts>
       </usages-collector>
     </session>
@@ -57,12 +55,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/page/DeviceManage.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="437" column="5" lean-forward="true" selection-start-line="437" selection-start-column="5" selection-end-line="437" selection-end-column="5" />
+            <state relative-caret-position="128">
+              <caret line="292" column="14" lean-forward="true" selection-start-line="292" selection-start-column="14" selection-end-line="292" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -71,6 +69,11 @@
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/page/admin/Power.vue">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -94,35 +97,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/admin/device.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="35" lean-forward="true" selection-start-column="35" selection-end-column="35" />
+            <state relative-caret-position="270">
+              <caret line="18" column="28" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/device/index.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="18" lean-forward="true" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/user/device.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/dev.env.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="204">
+              <caret line="316" column="20" selection-start-line="316" selection-start-column="20" selection-end-line="316" selection-end-column="20" />
+              <folding>
+                <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-table#0;n#template#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-card#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#11209#11287#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -137,6 +132,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/device/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="116">
+              <caret line="13" column="18" lean-forward="true" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/admin/group.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -145,7 +149,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
@@ -166,11 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loginout</find>
-      <find>localStorage</find>
-      <find>sub</find>
-      <find>handleCommand</find>
-      <find>ruilin</find>
       <find>cookie</find>
       <find>console.log</find>
       <find>import</find>
@@ -196,6 +195,11 @@
       <find>groups</find>
       <find>createForm</find>
       <find>this.group</find>
+      <find>新建</find>
+      <find>editDeviceInfo</find>
+      <find>is_search</find>
+      <find>search</find>
+      <find>搜索</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -221,14 +225,14 @@
         <option value="$PROJECT_DIR$/src/components/common/Header.vue" />
         <option value="$PROJECT_DIR$/src/components/page/GroupManage.vue" />
         <option value="$PROJECT_DIR$/config/prod.env.js" />
-        <option value="$PROJECT_DIR$/src/api/admin/device.js" />
         <option value="$PROJECT_DIR$/src/api/admin/group.js" />
-        <option value="$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue" />
         <option value="$PROJECT_DIR$/src/components/page/admin/GroupManage.vue" />
         <option value="$PROJECT_DIR$/src/components/page/admin/AllUser.vue" />
         <option value="$PROJECT_DIR$/src/components/page/Dashboard.vue" />
         <option value="$PROJECT_DIR$/config/index.js" />
         <option value="$PROJECT_DIR$/src/components/page/DeviceManage.vue" />
+        <option value="$PROJECT_DIR$/src/api/admin/device.js" />
+        <option value="$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue" />
       </list>
     </option>
   </component>
@@ -248,10 +252,10 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="257" />
-    <option name="y" value="23" />
-    <option name="width" value="1092" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="206" />
+    <option name="y" value="24" />
+    <option name="width" value="1187" />
     <option name="height" value="830" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -1960,18 +1964,18 @@
       <workItem from="1532092343593" duration="17001000" />
       <workItem from="1532170922327" duration="49914000" />
       <workItem from="1532355849494" duration="15538000" />
-      <workItem from="1532414092935" duration="12894000" />
+      <workItem from="1532414092935" duration="15218000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131629000" />
+    <option name="totallyTimeSpent" value="133953000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="257" y="23" width="1092" height="830" extended-state="1" />
+    <frame x="206" y="24" width="1187" height="830" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30532214" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28044596" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -2250,23 +2254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="337" column="24" selection-start-line="337" selection-start-column="24" selection-end-line="342" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#template#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-card#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#11209#11287#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/page/admin/GroupManage.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
@@ -2293,9 +2280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/page/admin/Power.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/page/Dashboard.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
@@ -2316,62 +2300,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/device/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="18" lean-forward="true" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/admin/group.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/user/device.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
           <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/user/group.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/admin/device.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" lean-forward="true" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/page/DeviceManage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="437" column="5" lean-forward="true" selection-start-line="437" selection-start-column="5" selection-end-line="437" selection-end-column="5" />
-          <folding>
-            <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-card#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#10484#10562#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2393,6 +2325,78 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="35" column="17" lean-forward="true" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/admin/group.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/page/admin/Power.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/device/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="13" column="18" lean-forward="true" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/admin/device.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/user/group.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/page/DeviceManage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="292" column="14" lean-forward="true" selection-start-line="292" selection-start-column="14" selection-end-line="292" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-card#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#10484#10562#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/page/admin/DeviceManage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="316" column="20" selection-start-line="316" selection-start-column="20" selection-end-line="316" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#el-button#0;n#el-col#2;n#el-row#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#template#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#el-tab-pane#1;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-card#0;n#el-tab-pane#2;n#el-tabs#0;n#el-dialog#0;n#div#3;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#11209#11287#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

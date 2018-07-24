@@ -16,3 +16,6 @@ export function getDeviceDetail(DeviceId) {
 export function delADevice(id) {
     return request.delete('/admin/delete/'+id)
 }
+export function selectDevice(keyword) {
+    return request.post('/admin/search/'+keyword)
+}
