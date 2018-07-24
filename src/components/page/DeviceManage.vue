@@ -443,9 +443,11 @@
             },
             newDevice(){
                 this.dialogCreateFormVisible = true
+
                 getAllGroups().then((res) => {
                     console.log(res.data.data);
                 })
+
             }
         }
     }

@@ -19,6 +19,15 @@ export function getDeviceLog(DeviceId) {
 }
 
 /**
+ * 分页获取全部日志信息
+ * @param {Number} cur_page 页码
+ * @param {Number} page_size 页数据量
+ */
+export function getAllLog(cur_page,page_size) {
+    return request.get('/device/getAllLog/'+cur_page+'/'+page_size)
+}
+
+/**
  * cmd接口
  * @param {JSON} data 
  */
