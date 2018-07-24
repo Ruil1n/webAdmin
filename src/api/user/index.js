@@ -16,3 +16,9 @@ export function login(data) {
 export function getCurrentUserInfo() {
     return request.get('/front/getCurrentUserInfo')
 }
+/** 
+ * 查询当前的系统状态
+*/
+export function getCurrentState() {
+    return request.get('/user/getCurrentState')
+}
