@@ -98,19 +98,20 @@
                                 width="180">
                                 </el-table-column>
                                 <el-table-column
-                                prop="device"
+                                prop="deviceId"
                                 label="设备"
                                 width="180">
                                 </el-table-column>
                                 <el-table-column
-                                prop="action"
+                                prop="event"
                                 label="事件">
                                 </el-table-column>
                             </el-table>
                             <el-pagination
                                 small
+                                @current-change ="handleCurrentChange"
                                 layout="prev, pager, next"
-                                :total="0">
+                                :total="this.total">
                                 </el-pagination>
                     </el-card>
                 </el-col>
@@ -129,6 +130,9 @@
         getSystemInfo,
         getEmqInfo
     } from '@/api/server'
+    import {
+        getAllLog
+    } from '@/api/device'
     export default {
         data: function() {
             return {
@@ -136,7 +140,10 @@
                 system: {},
                 emq: {},
                 state: {},
-                tableData:[]
+                tableData:[],
+                cur_page: 0,
+                page_size:10,
+                total:0
             }
         },
         mounted() {
@@ -149,7 +156,7 @@
             getSystemInfo().then((data) => {
                 this.system = data.data
             })
-    
+            this.getLog();
             // emq接口有问题 先把数据写成成默认的了
             /*
             getEmqInfo().then((data) => {
@@ -157,6 +164,18 @@
             })
             */
         },
+        methods: {
+            handleCurrentChange(val) {
+                this.cur_page = val - 1;
+                this.getLog();
+            },
+            getLog(){
+                getAllLog(this.cur_page,this.page_size).then((res) => {
+                    this.total = res.data.totalElements;
+                    this.tableData = res.data.data;
+                })
+            }
+        }
     }
 </script>
 

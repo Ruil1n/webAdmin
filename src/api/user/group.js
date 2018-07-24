@@ -13,7 +13,6 @@ export function getAllGroupsByPage(cur_page,page_size) {
  * 获取用户所有分组
  */
 export function getAllGroups() {
-
     return request.get('/user/getALlGroups')
 }
 

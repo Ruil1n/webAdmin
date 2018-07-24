@@ -59,6 +59,7 @@
                         width="120">
                 </el-table-column>
                 <el-table-column
+                        :formatter="stringFormat"
                         prop="isOnline"
                         label="在线状态"
                         width="120">
@@ -303,6 +304,14 @@
             this.getData();
         },
         methods: {
+            stringFormat(row, column){
+                var data = row[column.property];
+                if(data){
+                    return "在线"
+                }else{
+                    return "下线"
+                }
+            },
             handleCurrentChange(val) {
                 this.cur_page = val - 1;
                 this.getData();
