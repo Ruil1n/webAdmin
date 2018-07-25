@@ -91,7 +91,7 @@
                             <el-table
                                 :data="tableData"
                                 border
-                                style="width: 100%s;height: 480px;">
+                                style="width: 100%;height: 480px;">
                                 <el-table-column
                                 prop="date"
                                 label="日期"

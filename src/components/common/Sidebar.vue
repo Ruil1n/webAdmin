@@ -100,6 +100,10 @@
                                 title: '设备管理'
                             },
                             {
+                                index: '/admin/alllog',
+                                title: '设备日志'
+                            },
+                            {
                                 index: '/admin/group',
                                 title: '群组管理'
                             },
