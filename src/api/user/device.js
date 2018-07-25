@@ -31,3 +31,19 @@ export function getCurrentState() {
     return request.get('/user/getCurrentState')
 }
 
+/**
+根据用户查询设备
+ */
+export function searchByAppUser(keyWords) {
+    return request.post('/user/searchByAppUser/'+keyWords)
+}
+
+/**
+管理员用户修改设备
+ */
+export function changeDeviceGroup(data) {
+    return request.post('/user/changeDeviceGroup',data)
+}
+
+
+

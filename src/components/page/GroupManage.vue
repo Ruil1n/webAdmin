@@ -31,7 +31,7 @@
             </el-table-column>
             <el-table-column prop="comment" label="备注" width="150">
             </el-table-column>
-            <el-table-column prop="create_time" label="操作时间" width="150">
+            <el-table-column prop="create_time" label="操作时间" width="220">
             </el-table-column>
             <el-table-column label="操作" width="235">
                 <template scope="scope">
