@@ -127,6 +127,14 @@ const router = new Router({
                     },
                     component: resolve => require(['../components/page/admin/AllUser.vue'], resolve) //全部用户
 
+                },
+                {
+                    path: '/admin/alllog',
+                    meta: {
+                        requireAuth: true,
+                    },
+                    component: resolve => require(['../components/page/admin/AllLog.vue'], resolve) //全部用户
+
                 }
             ]
         },
