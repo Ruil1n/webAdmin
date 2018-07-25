@@ -74,11 +74,6 @@
                         index: '/basecharts',
                         title: '图表'
                     },
-                    {
-                        icon: 'el-icon-upload2',
-                        index: '/drag',
-                        title: '拖拽'
-                    },
                     {   icon:'el-icon-star-on',
                         index:'/device',
                         title:'设备管理'
@@ -109,8 +104,8 @@
                                 title: '群组管理'
                             },
                             {
-                                index: '/admin/power',
-                                title: '高级权限'
+                                index: '/admin/alluser',
+                                title: '所有用户'
                             }
                         ]
                     },

@@ -70,7 +70,7 @@
                         width="100">
                     <template slot-scope="scope">
                         <el-button @click="getDeviceStatus(scope.$index, scope.row)" type="text" size="small">查看</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
+                        <el-button @click="editDeviceInfo(scope.row)" type="text" size="small">编辑</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -80,26 +80,35 @@
 
 
 
-        <!-- TODO:编辑设备 -->
+        <!-- 编辑设备 -->
         <el-dialog  title="编辑" :visible.sync="dialogEditFormVisible" >
-            <el-form :model="editForm" style="width:70%">
-                <el-form-item label="名称" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
+            <el-form :model="EditTableData" style="width:70%">
+                <el-form-item label="设备ID" :label-width="formLabelWidth">
+                    <el-input v-model="EditTableData.deviceId" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="前缀" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.prefix" auto-complete="off"></el-input>
+                <el-form-item label="名称" :label-width="formLabelWidth">
+                    <el-input v-model="EditTableData.deviceName" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" :label-width="formLabelWidth">
+                    <el-input v-model="EditTableData.deviceDescribe" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="地址" :label-width="formLabelWidth">
-                    <el-input v-model="editForm.address" auto-complete="off"></el-input>
+                    <el-input v-model="EditTableData.locationDescribe" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item  label="分组" :lable-width="formLabelWidth" >
-                    <el-select v-model="editForm.groups" auto-complete="off"></el-select>
+                <el-form-item label="分组" :label-width="formLabelWidth">
+                    <el-select v-model="EditTableData.groupName" placeholder="请选择">
+                        <el-option
+                                v-for="item in this.groups"
+                                :key="item.name"
+                                :label="item.name"
+                                :value="item.name">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogEditFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogEditFormVisible = false">确 定</el-button>
+                <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editDevice()">确 定</el-button>
             </div>
         </el-dialog>
 
@@ -111,9 +120,6 @@
                 </el-form-item>
                 <el-form-item label="备注" :label-width="formLabelWidth">
                     <el-input v-model="createForm.deviceDescribe" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="前缀" :label-width="formLabelWidth">
-                    <el-input v-model="createForm.deviceNamePrefix" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="地址" :label-width="formLabelWidth">
                     <el-input v-model="createForm.locationDescribe" auto-complete="off"></el-input>
@@ -238,14 +244,24 @@
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllDevices,getDeviceDetail,delADevice} from "@/api/admin/device";
+    import {getAllDevices,getDeviceDetail,delADevice,selectDevice} from "@/api/admin/device";
+    import {changeDeviceGroup} from "@/api/user/device"
     import {getDeviceLog, sendCmdToDevice} from "@/api/device"
+    import {getAllGroups} from "@/api/user/group"
     export default {
         components: {
             ElSelectDropdown
         },
         data() {
             return {
+                EditTableData: {
+                    deviceId:'',
+                    deviceName:'',
+                    groupName:'',
+                    locationDescribe:'',
+                    deviceDescribe:'',
+                    groupId:''
+                },
                 logdata:[],
                 dialogVisible: false,
                 activeName: 'first',
@@ -261,7 +277,6 @@
                 createForm: {
                     deviceDescribe: 'Device123',
                     deviceName: 'Device123',
-                    deviceNamePrefix: 'Test',
                     // 经度纬度先确定 后期可以考虑获取方法
                     latitude :"N39°54′6.74″",
                     longitude : "E116°23′29.52″",
@@ -281,7 +296,6 @@
                 select_cate: '',
                 select_word: '',
                 del_list: [],
-                is_search: false,
                 is_delete: false,
                 delete_messgae: {},
                 delete_id: '',
@@ -302,6 +316,7 @@
         },
         created() {
             this.getData();
+            this.fetchAllGroups();
         },
         methods: {
             stringFormat(row, column){
@@ -311,6 +326,14 @@
                 }else{
                     return "下线"
                 }
+            },
+            fetchAllGroups() {
+                getAllGroups().then((res) => {
+
+                    this.groups=res.data;
+                    // console.log(this.groups);
+                    this.createForm.groupId=this.groups[0].id;
+                })
             },
             handleCurrentChange(val) {
                 this.cur_page = val - 1;
@@ -323,7 +346,11 @@
                 })
             },
             search() {
-                this.is_search = true;
+                selectDevice(this.select_word).then((res)=>{
+
+                    this.tableData = res.data;
+                })
+
             },
             formatter(row, column) {
                 return row.address;
@@ -406,8 +433,15 @@
                     this.logdata=res.data.data;
                 });
             },
-            editDeviceInfo(){
-                this.dialogEditFormVisible = true;
+            editDeviceInfo(row){
+                this.dialogEditFormVisible=true;
+                this.EditTableData.deviceId=row.id;
+                this.EditTableData.deviceName=row.describe;
+                this.EditTableData.deviceDescribe=row.describe;
+                this.EditTableData.groupName=row.groupName;
+                this.createForm.groupName=row.groupName;
+                this.EditTableData.locationDescribe=row.location.describe;
+                this.EditTableData.groupId=row.groupId;
             },
             connectEmq(sdkKey){
                 var path=sdkKey.replace(/-/g, '/');
@@ -459,6 +493,20 @@
                 this.sendCmdInfo.deviceId=this.deviceId;
                 sendCmdToDevice(this.sendCmdInfo);
             },
+            editDevice() {
+
+                changeDeviceGroup(this.EditTableData).then((res) => {
+                    console.log(res);
+
+                    this.$message({
+                        showClose: true,
+                        message: '成功修改设备ID:' + this.EditTableData.deviceId,
+                        type: 'success'
+                    });
+                    this.dialogEditFormVisible = false;
+                    this.getData();
+                });
+            }
         }
     }
 </script>

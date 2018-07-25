@@ -121,11 +121,11 @@ const router = new Router({
 
                 },
                 {
-                    path: '/admin/power',
+                    path: '/admin/alluser',
                     meta: {
                         requireAuth: true,
                     },
-                    component: resolve => require(['../components/page/admin/Power.vue'], resolve) //测试页面
+                    component: resolve => require(['../components/page/admin/AllUser.vue'], resolve) //全部用户
 
                 }
             ]
