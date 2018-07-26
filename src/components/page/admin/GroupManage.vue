@@ -199,7 +199,7 @@
 
             },
             handleDelete(index, row) {
-                console.log(row.id);
+                // console.log(row.id);
                 delAGroup(row.id).then((res) =>{
                     this.$message.success('您已经成功删除'+row.name);
                     this.getData();
