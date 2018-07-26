@@ -27,7 +27,7 @@
             return {
                 userItems: [
                     {
-                        icon: 'el-icon-setting',
+                        icon:'el-icon-view',
                         index: '/dashboard',
                         title: '系统首页'
                     },
@@ -74,40 +74,42 @@
                     //     index: '/basecharts',
                     //     title: '图表'
                     // },
-                    {   icon:'el-icon-star-on',
+                    {   icon:'el-icon-date',
                         index:'/device',
                         title:'设备管理'
 
                     },
-                    {   icon: 'el-icon-upload2',
-                        index: '/Test',
-                        title: '测试'
-                    },
+                    // {   icon: 'el-icon-upload2',
+                    //     index: '/Test',
+                    //     title: '测试'
+                    // },
                     {
-                        icon: 'el-icon-star-on',
+                        icon:'el-icon-menu',
                         index: '/group',
                         title: '群组管理'
                     }
                     ],
                 adminItems:
                     {
-                    icon: 'el-icon-star-on',
+                    icon: 'el-icon-setting',
                     index: '1',
                     title: '系统管理',
                         subs:[
-                            {
+                            {   icon:'el-icon-menu',
                                 index: '/admin/device',
                                 title: '设备管理'
                             },
                             {
+                                icon:'el-icon-news',
                                 index: '/admin/alllog',
                                 title: '设备日志'
                             },
-                            {
+                            {   icon:'el-icon-menu',
                                 index: '/admin/group',
                                 title: '群组管理'
                             },
                             {
+                                icon:'el-icon-view',
                                 index: '/admin/alluser',
                                 title: '所有用户'
                             }

@@ -172,6 +172,7 @@
             },
             getData(){
                 getAllGroupsByPage(this.cur_page,this.page_size).then((res) => {
+
                     this.total = res.data.totalElements;
                     this.tableData = res.data.data;
                 })
