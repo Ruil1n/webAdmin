@@ -99,11 +99,6 @@
                                 index: '/admin/device',
                                 title: '设备管理'
                             },
-                            {
-                                icon:'el-icon-news',
-                                index: '/admin/alllog',
-                                title: '设备日志'
-                            },
                             {   icon:'el-icon-menu',
                                 index: '/admin/group',
                                 title: '群组管理'
@@ -112,7 +107,12 @@
                                 icon:'el-icon-view',
                                 index: '/admin/alluser',
                                 title: '所有用户'
-                            }
+                            },
+                            {
+                                icon:'el-icon-news',
+                                index: '/admin/alllog',
+                                title: '日志记录'
+                            },
                         ]
                     },
                 items: []
