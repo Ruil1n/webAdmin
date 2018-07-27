@@ -43,3 +43,4 @@ export function createAGroup(data) {
 export function updateGroup(data) {
     return request.post('/user/updateGroup',data)
 }
+

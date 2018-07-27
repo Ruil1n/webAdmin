@@ -201,7 +201,6 @@
     .user-info-cont {
         -ms-flex: 1;
         flex: 1;
-        padding-left: 50px;
         color: #999;
         font-size: 14px
     }
@@ -218,7 +217,7 @@
     }
     
     .user-info-list span {
-        margin-left: 70px
+        margin-left: 20px
     }
     
     .grid-content {

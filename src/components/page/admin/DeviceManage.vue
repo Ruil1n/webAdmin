@@ -321,6 +321,7 @@
         methods: {
             stringFormat(row, column){
                 var data = row[column.property];
+
                 if(data){
                     return "在线"
                 }else{
@@ -343,6 +344,7 @@
                 getAllDevices(this.cur_page,this.page_size).then((res) => {
                     this.total = res.data.totalElements;
                     this.tableData = res.data.data;
+
                 })
             },
             search() {
@@ -418,9 +420,9 @@
             },
             getDeviceStatus(index,row){
                 this.dialogVisible=true;
-                console.log(row.id);
+                // console.log(row.id);
                 getDeviceDetail(row.id).then((res) =>{
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.deviceId=res.data.id;
                     this.statuss=res.data.isOnline;
                     this.lastOnline=res.data.lastActiveDate;

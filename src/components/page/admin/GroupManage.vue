@@ -27,13 +27,13 @@
             <el-table-column type="selection" width="45"></el-table-column>
             <el-table-column prop="id" label="组ID" sortable width="140">
             </el-table-column>
-            <el-table-column prop="name" label="名称" width="120">
+            <el-table-column prop="name" label="名称" width="140">
             </el-table-column>
-            <el-table-column prop="comment" label="备注" width="150">
+            <el-table-column prop="user" label="归属用户" width="160">
             </el-table-column>
-            <el-table-column prop="create_time" label="操作时间" width="210">
+            <el-table-column prop="comment" label="备注" width="170">
             </el-table-column>
-            <el-table-column label="操作" width="235">
+            <el-table-column label="操作" width="240">
                 <template scope="scope">
                     <el-button size="small"
                                @click="broadCast(scope)">分组广播</el-button>
@@ -113,8 +113,10 @@
 </template>
 
 <script>
-    import {getAllGroupsByPage,sendCmdToGroup,createAGroup,updateGroup} from "@/api/user/group"
+    import {sendCmdToGroup,createAGroup,updateGroup} from "@/api/user/group"
     import {delAGroup} from "@/api/admin/group"
+    import {getAllGroupsByPage} from "@/api/admin/group"
+
 
     export default {
         data() {
@@ -174,8 +176,10 @@
             },
             getData(){
                 getAllGroupsByPage(this.cur_page,this.page_size).then((res) => {
-                    this.total = res.data.totalElements;
-                    this.tableData = res.data.data;
+                    console.log(res);
+                    this.total = res.data.length;
+                    this.tableData = res.data;
+
                 })
             },
             search(){
@@ -195,7 +199,7 @@
 
             },
             handleDelete(index, row) {
-                console.log(row.id);
+                // console.log(row.id);
                 delAGroup(row.id).then((res) =>{
                     this.$message.success('您已经成功删除'+row.name);
                     this.getData();

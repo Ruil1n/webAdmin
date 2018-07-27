@@ -29,7 +29,7 @@
             </el-table-column>
             <el-table-column prop="name" label="名称" width="120">
             </el-table-column>
-            <el-table-column prop="comment" label="备注" width="150">
+            <el-table-column prop="comment" label="备注" width="115">
             </el-table-column>
             <el-table-column prop="create_time" label="操作时间" width="220">
             </el-table-column>
@@ -114,6 +114,7 @@
 
 <script>
     import {getAllGroupsByPage,sendCmdToGroup,createAGroup,updateGroup} from "@/api/user/group"
+    import {delAGroup} from "@/api/admin/group"
     export default {
         data() {
             return {
@@ -172,6 +173,7 @@
             },
             getData(){
                 getAllGroupsByPage(this.cur_page,this.page_size).then((res) => {
+
                     this.total = res.data.totalElements;
                     this.tableData = res.data.data;
                 })
@@ -193,7 +195,10 @@
 
             },
             handleDelete(index, row) {
-                this.$message.error('删除第'+(index+1)+'行');
+                delAGroup(row.id).then((res) =>{
+                    this.$message.success('您已经成功删除'+row.name);
+                    this.getData();
+                })
             },
             delAll(){
                 const self = this,
@@ -203,8 +208,11 @@
 
                 for (let i = 0; i < length; i++) {
                     str += self.multipleSelection[i].name + ' ';
+                    delAGroup(self.multipleSelection[i].id).then((res) =>{
+                        self.getData();
+                    });
                 }
-                self.$message.error('删除了'+str);
+                self.$message.error('您已经成功删除了'+str);
                 self.multipleSelection = [];
             },
             handleSelectionChange(val) {
